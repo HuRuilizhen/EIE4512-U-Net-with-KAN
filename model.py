@@ -162,7 +162,6 @@ class UKCONV(nn.Module):
         R3 = self.C3(self.D2(R2))
         R4 = self.C4(self.D3(R3))
         Y1 = self.C5(self.D4(R4))
-
         O1 = self.C6(self.U1(Y1, R4))
         O2 = self.C7(self.U2(O1, R3))
         O3 = self.C8(self.U3(O2, R2))
