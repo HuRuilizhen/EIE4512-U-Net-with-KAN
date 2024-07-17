@@ -146,7 +146,7 @@ class UNet(nn.Module):
 class UDKCONV(nn.Module):
 
     def __init__(self, in_channels=1, out_channels=1):
-        super(UKCONV, self).__init__()
+        super(UDKCONV, self).__init__()
         self.C1 = KAN_Convolutional_Layer(
             kernel_size=(3, 3), n_convs=16, stride=(1, 1), padding=(1, 1)
         )
@@ -198,6 +198,21 @@ class UDKCONV(nn.Module):
         O4 = self.C9(self.U4(O3, R1))
 
         return self.Th(self.pred(O4))
+
+    def visualize(self, x):
+        R1 = self.C1(x)
+        R2 = self.C2(self.D1(R1))
+        R3 = self.C3(self.D2(R2))
+        R4 = self.C4(self.D3(R3))
+        Y1 = self.C5(self.D4(R4))
+
+        O1 = self.C6(self.U1(Y1, R4))
+        O2 = self.C7(self.U2(O1, R3))
+        O3 = self.C8(self.U3(O2, R2))
+        O4 = self.C9(self.U4(O3, R1))
+        Y2 = self.Th(self.pred(O4))
+
+        return R1, R2, R3, R4, Y1, O1, O2, O3, O4, Y2
 
 
 class UKCONV(nn.Module):
